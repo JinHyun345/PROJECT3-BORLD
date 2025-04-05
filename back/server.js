@@ -1,6 +1,5 @@
 import app from './app.js';
-const port = 5000;
-
-app.listen(port, () => {
-  console.log(`✅ 서버 실행 중! 포트: ${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ 서버 실행 중! 포트는 ${PORT}`);
 });
