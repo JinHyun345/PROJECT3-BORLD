@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use(cors({
-  origin: "https://www.mytestapp.space/",
+  origin: "https://www.mytestapp.space",
   credentials: true
 }));
 
