@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-console.log("API URL:", process.env.REACT_APP_API_URL);
+console.log("API URL:", process.env.VITE_API_URL);
 
 const usePreventBackNavigation = () => {
   useEffect(() => {
@@ -38,7 +38,7 @@ const Signin = () => {
 
   const handleSignin = async (e) => {
     e.preventDefault();
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/signin`, {
+    const response = await fetch(`${process.env.VITE_API_URL}/auth/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -60,7 +60,7 @@ const Signin = () => {
   };
   const handleRequestVerificationCode = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/verify/send-code`, {
+      const response = await fetch(`${process.env.VITE_API_URL}/verify/send-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -77,7 +77,7 @@ const Signin = () => {
     }
   }
   const handleVerifyCode = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/verify/verify-code`, {
+    const response = await fetch(`${process.env.VITE_API_URL}/verify/verify-code`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, code : verificationCode }),
@@ -93,7 +93,7 @@ const Signin = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    console.log("API URL:", process.env.REACT_APP_API_URL);
+    console.log("API URL:", process.env.VITE_API_URL);
 
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -108,7 +108,7 @@ const Signin = () => {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/signup`, {
+      const response = await fetch(`${process.env.VITE_API_URL}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),
@@ -150,7 +150,7 @@ const Signin = () => {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/delete`, {
+      const response = await fetch(`${process.env.VITE_API_URL}/auth/delete`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`  // 토큰을 Authorization 헤더에 첨부
