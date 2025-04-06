@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+console.log("API URL:", process.env.REACT_APP_API_URL);
 
 const usePreventBackNavigation = () => {
   useEffect(() => {
@@ -58,7 +59,6 @@ const Signin = () => {
     }
   };
   const handleRequestVerificationCode = async () => {
-    console.log("데헷");
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/verify/send-code`, {
         method: "POST",
@@ -93,6 +93,7 @@ const Signin = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    console.log("API URL:", process.env.REACT_APP_API_URL);
 
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
