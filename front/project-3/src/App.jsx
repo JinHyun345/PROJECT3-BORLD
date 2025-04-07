@@ -60,7 +60,7 @@ const Signin = () => {
   };
   const handleRequestVerificationCode = async () => {
     try {
-      const response = await fetch(`${apiUrl}/verify/send-code`, {
+      const response = await fetch(`${apiUrl}/verification/send-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -70,14 +70,14 @@ const Signin = () => {
         alert("인증번호가 이메일로 전송되었습니다.");
         setIsEmailSent(true);
       } else {
-        alert("이메일 전송 실패: " + data.error);
+        alert("이메일 전송 실패: " + data.message);
       }
     } catch (error) {
       console.error("Error sending verification code:", error);
     }
   }
   const handleVerifyCode = async () => {
-    const response = await fetch(`${apiUrl}/verify/verify-code`, {
+    const response = await fetch(`${apiUrl}/verification/verify-code`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, code : verificationCode }),
@@ -87,7 +87,7 @@ const Signin = () => {
       alert("인증이 완료되었습니다.");
       setIsVerified(true);
     } else {
-      alert("인증번호가 맞지 않습니다: " + data.error);
+      alert("인증번호가 맞지 않습니다: " + data.message);
     }
   }
 

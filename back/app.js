@@ -7,9 +7,8 @@ import db from './models/db.js';
 
 const app = express();
 app.use(express.json());
-app.use("/api/auth", authRoutes);
 app.use(cors({
-  origin: "https://www.mytestapp.space",
+  origin: `${process.env.CORS_ORIGIN}`,
   credentials: true
 }));
 
@@ -21,6 +20,6 @@ db.connect(err => {
 
 // 라우터 연결
 app.use('/auth', authRoutes);
-app.use('/verify', verificationRoutes);
+app.use('/verification', verificationRoutes);
 
 export default app;
