@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Home = () => {
-    const [view, setView] = useState("buttons"); // 상태: "buttons", "signup", "signin", "signout"
+  const [view, setView] = useState("buttons"); // 상태: "buttons", "signup", "signin", "signout"
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordcheck, setPasswordcheck] = useState("");
+
+  const navigate = useNavigate();
+
 
   //페이지 로드할 때 로그인 상태 확인해야함
   useEffect(() => {
@@ -38,6 +42,7 @@ const Home = () => {
       setEmail("");
       setPassword("");
       setPasswordcheck("");
+      navigate('/posts');
     } else {
       alert("비밀번호를 확인해주세요");
     }
@@ -129,6 +134,10 @@ const Home = () => {
       alert("서버 오류가 발생했습니다.");
     }
   };
+
+  const handleBorld = ()=>{
+
+  }
   return (
     <div className="auth-container">
       {localStorage.getItem("token") ? (
