@@ -2,28 +2,11 @@ import { useState, useEffect } from "react";
 import "./App.css";
 const apiUrl = import.meta.env.VITE_API_URL;
 
-const usePreventBackNavigation = () => {
-  useEffect(() => {
-      window.history.pushState(null, "", window.location.href);
-      const preventGoBack = () => {
-          window.history.pushState(null, "", window.location.href);
-      };
-      window.addEventListener("popstate", preventGoBack);
-      return () => window.removeEventListener("popstate", preventGoBack);
-  }, []);
-};
-
-
 const Signin = () => {
-  usePreventBackNavigation();
   const [view, setView] = useState("buttons"); // 상태: "buttons", "signup", "signin", "signout"
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [verificationCode, setVerificationCode] = useState("");
-  const [isEmailSent, setIsEmailSent] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
-
 
   //페이지 로드할 때 로그인 상태 확인해야함
   useEffect(() => {
@@ -49,7 +32,7 @@ const Signin = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);
 
-      alert("Login successful!");
+      alert("로그인에 성공했습니다!");
       setView("buttons");
       setUsername(data.username);
       setEmail("");
@@ -58,42 +41,9 @@ const Signin = () => {
       alert("비밀번호를 확인해주세요");
     }
   };
-  const handleRequestVerificationCode = async () => {
-    try {
-      const response = await fetch(`${apiUrl}/verification/send-code`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        alert("인증번호가 이메일로 전송되었습니다.");
-        setIsEmailSent(true);
-      } else {
-        alert("이메일 전송 실패: " + data.message);
-      }
-    } catch (error) {
-      console.error("Error sending verification code:", error);
-    }
-  }
-  const handleVerifyCode = async () => {
-    const response = await fetch(`${apiUrl}/verification/verify-code`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, code : verificationCode }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      alert("인증이 완료되었습니다.");
-      setIsVerified(true);
-    } else {
-      alert("인증번호가 맞지 않습니다: " + data.message);
-    }
-  }
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    console.log("API URL:", apiUrl);
 
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -195,53 +145,28 @@ const Signin = () => {
       {view === "signup" && (
         <div>
           <h2>Sign Up</h2>
-
-          {/* Step 1: 이메일 입력 + 인증 요청 */}
-          {!isEmailSent && !isVerified && (
-            <>
-              <input
-                type="email"
-                placeholder="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <button onClick={handleRequestVerificationCode}>인증번호 전송</button>
-              <button onClick={() => {setView("buttons");setEmail("");setPassword("");}}>Back</button>
-            </>
-          )}
-
-          {/* Step 2: 인증번호 입력 */}
-          {isEmailSent && !isVerified && (
-            <>
-              <input
-                type="text"
-                placeholder="인증 코드 입력"
-                value={verificationCode}
-                onChange={(e) => setVerificationCode(e.target.value)}
-              />
-              <button onClick={handleVerifyCode}>완료</button>
-            </>
-          )}
-
-          {/* Step 3: 인증 완료 후 회원가입 */}
-          {isVerified && (
-            <form onSubmit={handleSignup}>
-              <input type="email" value={email} disabled /> {/* 이메일 수정 불가 */}
-              <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button type="submit">Sign Up</button>
-            </form>
-          )}
+          <form onSubmit={handleSignup}>
+            <input
+              type="email"
+              placeholder="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button type="submit">Sign Up</button>
+            <button onClick={() => { setView("buttons"); setEmail(""); setPassword(""); }}>Back</button>
+          </form>
         </div>
       )}
 
@@ -261,8 +186,8 @@ const Signin = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button type="submit">Sign in</button>
-          <button onClick={() => {setView("buttons");setEmail("");setPassword("");}}>Back</button>
-          </form>
+          <button onClick={() => { setView("buttons"); setEmail(""); setPassword(""); }}>Back</button>
+        </form>
       )}
     </div>
   );
