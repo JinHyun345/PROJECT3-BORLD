@@ -88,6 +88,8 @@ const Signin = () => {
   };
 
   const handleSignOut = () => {
+    const confirmed = window.confirm("sign out 하시겠습니까?");
+    if(!confirmed) return;
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     setUsername("");
@@ -95,6 +97,9 @@ const Signin = () => {
   };
 
   const handleDeleteAccount = async () => {
+    const confirmed = window.confirm("정말 계정을 삭제하시겠습니까? 계정 삭제 시 계정에 관한 모든 정보가 삭제됩니다.");
+    if(!confirmed) return;
+
     const token = localStorage.getItem("token");
 
     if (!token) {
