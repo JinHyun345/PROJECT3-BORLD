@@ -1,10 +1,11 @@
 import express from 'express';
+import { fetchAllPosts, fetchPostById, createNewPost } from '../controllers/postController.js';
+import authMiddleware from '../middlewares/authMiddleware.js'; // 로그인 여부 확인
+
 const router = express.Router();
-const postController = require('../controllers/postController');
-const authMiddleware = require('../middlewares/authMiddleware'); // 로그인 여부 확인
 
-router.get('/', postController.getAllPosts);
-router.get('/:id', postController.getPostById);
-router.post('/', authMiddleware, postController.createPost);
+router.get('/', fetchAllPosts);
+router.get('/:id', fetchPostById);
+router.post('/', authMiddleware, createNewPost);
 
-module.exports = router;
+export default router;

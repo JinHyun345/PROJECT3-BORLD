@@ -1,4 +1,5 @@
 import express from 'express';
+import session from 'express-session';
 import cors from 'cors';
 import 'dotenv/config';
 import authRoutes from './routes/authRoutes.js';
@@ -7,6 +8,11 @@ import verificationRoutes from './routes/verificationRoutes.js';
 import db from './models/db.js';
 
 const app = express();
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+}));
 app.use(express.json());
 app.use(cors({
   origin: `${process.env.CORS_ORIGIN}`,
