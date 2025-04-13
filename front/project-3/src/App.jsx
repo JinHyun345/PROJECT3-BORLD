@@ -7,6 +7,7 @@ const Signin = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordcheck, setPasswordcheck] = useState("");
 
   //페이지 로드할 때 로그인 상태 확인해야함
   useEffect(() => {
@@ -37,6 +38,7 @@ const Signin = () => {
       setUsername(data.username);
       setEmail("");
       setPassword("");
+      setPasswordcheck("");
     } else {
       alert("비밀번호를 확인해주세요");
     }
@@ -56,7 +58,10 @@ const Signin = () => {
       alert("프론트:비밀번호는 영문, 숫자, 특수문자를 포함하여 10자 이상이어야 합니다.");
       return;
     }
-
+    if (password !== passwordcheck) {
+      alert("비밀번호를 정확하게 입력해주세요.");
+      return;
+    }
     try {
       const response = await fetch(`${apiUrl}/auth/signup`, {
         method: "POST",
@@ -79,9 +84,7 @@ const Signin = () => {
     setEmail("");
     setUsername("");
     setPassword("");
-    setIsEmailSent(false);
-    setIsVerified(false);
-    setVerificationCode("");
+    setPasswordcheck("");
   };
 
   const handleSignOut = () => {
@@ -163,6 +166,12 @@ const Signin = () => {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="rewrite the Password"
+              value={passwordcheck}
+              onChange={(e) => setPasswordcheck(e.target.value)}
             />
             <button type="submit">Sign Up</button>
             <button onClick={() => { setView("buttons"); setEmail(""); setPassword(""); }}>Back</button>
