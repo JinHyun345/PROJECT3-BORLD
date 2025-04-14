@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 const apiUrl = import.meta.env.VITE_API_URL;
 
-const PostList = () => {
+const Post = () => {
   const [posts, setPosts] = useState([]);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -37,7 +39,7 @@ const PostList = () => {
 
   
   useEffect(() => {
-    fetch(`${apiUrl}//posts`, {
+    fetch(`${apiUrl}/post`, {
       credentials: 'include', // 세션 정보 포함해서 보내기!
     })
     .then(res => {
@@ -51,7 +53,7 @@ const PostList = () => {
   // 게시글 목록 불러오기
   const fetchPosts = async () => {
     try {
-      const res = await fetch(`${apiUrl}/posts`);
+      const res = await fetch(`${apiUrl}/post`);
       const data = await res.json();
       setPosts(data);
     } catch (err) {
@@ -62,7 +64,7 @@ const PostList = () => {
     const handleCreate = async (e) => {
       e.preventDefault();
       try {
-        const res = await fetch(`${apiUrl}/posts`, {
+        const res = await fetch(`${apiUrl}/post`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -84,7 +86,7 @@ const PostList = () => {
       if (!confirmed) return;
   
       try {
-        await fetch(`${apiUrl}/posts/${id}`, {
+        await fetch(`${apiUrl}/post/${id}`, {
           method: "DELETE",
           headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -129,4 +131,4 @@ const PostList = () => {
   );
 };
 
-export default PostList;
+export default Post;

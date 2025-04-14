@@ -2,7 +2,9 @@ import express from 'express';
 import session from 'express-session';
 import cors from 'cors';
 import 'dotenv/config';
-import authRoutes from './routes/authRoutes.js';
+import index from './routes/index.js'
+import signinRoutes from './routes/signinRoutes.js';
+import signupRoutes from './routes/signupRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import verificationRoutes from './routes/verificationRoutes.js';
 import db from './models/db.js';
@@ -26,8 +28,7 @@ db.connect(err => {
 });
 
 // 라우터 연결
-app.use('/auth', authRoutes);
-app.use('/posts', postRoutes);
+app.use('/', index, signupRoutes, signinRoutes, postRoutes );
 app.use('/verification', verificationRoutes);
 
 export default app;

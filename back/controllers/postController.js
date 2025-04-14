@@ -31,3 +31,4 @@ export const createNewPost = async (req, res) => {
     res.status(500).json({ message: '게시글 작성 실패' });
   }
 };
+

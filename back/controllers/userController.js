@@ -2,6 +2,8 @@ import db from '../models/db.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+// 여기에 signup, signin, deleteUser 있읍니다...
+
 export const signup = async (req, res) => {
   const { username, email, password } = req.body;
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;

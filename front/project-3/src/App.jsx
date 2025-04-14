@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import PostList from '../pages/PostList';
 import Home from '../pages/Home';
+import Signup from '../pages/Signup';
+import Signin from '../pages/Signin';
+import Post from '../pages/Post';
 import "./App.css";
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -9,7 +11,9 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/posts" element={<PostList />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/post" element={<Post />} />
       </Routes>
     </Router>
   );
