@@ -20,10 +20,10 @@ export const fetchPostById = async (req, res) => {
 };
 export const createNewPost = async (req, res) => {
   try {
-    const { title, content, hashtags } = req.body;
+    const { title, content} = req.body;
     const userId = req.user?.id; // 인증 미들웨어 통해 유저 정보 가져옴
     if (!userId) return res.status(401).json({ message: '로그인이 필요합니다.' });
-
+    
     const postId = await createPost(userId, title, content, hashtags);
     res.status(201).json({ id: postId });
   } catch (err) {

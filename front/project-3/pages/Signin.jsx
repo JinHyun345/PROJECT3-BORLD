@@ -16,7 +16,8 @@ const Signin = () => {
       body: JSON.stringify({ email, password }),
     });
     const data = await response.json();
-    console.log("Response Data:", data);
+    console.log("아잉response:", response)
+    console.log("아잉Response Data:", data);
     if (response.ok && data.token) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);

@@ -1,16 +1,85 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Post = () => {
   const [posts, setPosts] = useState([]);
   const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  const [content, setContent] = useState('');
   const [showForm, setShowForm] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    fetch(`${apiUrl}/verifyToken`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('인증 필요!');
+        return res.json();
+      })
+      .then(data => setPosts(data))
+      .catch(err => console.error(err));
+  }, []);
+
+  // 게시글 목록 불러오기
+  const fetchPosts = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${apiUrl}/post`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      if (!res.ok) throw new Error("인증 필요!");
+      const data = await res.json();
+      setPosts(data);
+    } catch (err) {
+      console.error("글 불러오기 에러", err);
+    }
+  };
+  // 글 작성
+  const handlePosts = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`${apiUrl}/posts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify({ title, content }),
+      });
+      if (res.ok) {
+        setTitle('');
+        setContent('');
+        fetchPosts();
+      }
+    } catch (err) {
+      console.error("글 작성 실패", err);
+    }
+  };
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm("삭제할까요?");
+    if (!confirmed) return;
+
+    try {
+      await fetch(`${apiUrl}/post/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+      });
+      fetchPosts();
+    } catch (err) {
+      console.error("삭제 실패", err);
+    }
+  };
 
   const handleSignOut = () => {
     localStorage.removeItem("token"); // 토큰 삭제
@@ -39,67 +108,7 @@ const Post = () => {
       console.error("탈퇴 에러", err);
     }
   };
-
-
-  useEffect(() => {
-    fetch(`${apiUrl}/post`, {
-      credentials: 'include', // 세션 정보 포함해서 보내기!
-    })
-      .then(res => {
-        if (!res.ok) throw new Error('인증 필요!');
-        return res.json();
-      })
-      .then(data => setPosts(data))
-      .catch(err => console.error(err));
-  }, []);
-
-  // 게시글 목록 불러오기
-  const fetchPosts = async () => {
-    try {
-      const res = await fetch(`${apiUrl}/post`);
-      const data = await res.json();
-      setPosts(data);
-    } catch (err) {
-      console.error("글 불러오기 에러", err);
-    }
-  };
-  // 글 작성
-  const handleCreate = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch(`${apiUrl}/post`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
-        },
-        body: JSON.stringify({ title, body }),
-      });
-      if (res.ok) {
-        setTitle('');
-        setBody('');
-        fetchPosts();
-      }
-    } catch (err) {
-      console.error("글 작성 실패", err);
-    }
-  };
-  const handleDelete = async (id) => {
-    const confirmed = window.confirm("삭제할까요?");
-    if (!confirmed) return;
-
-    try {
-      await fetch(`${apiUrl}/post/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
-        },
-      });
-      fetchPosts();
-    } catch (err) {
-      console.error("삭제 실패", err);
-    }
-  };
+  
   return (
     <div className="flex gap-6 p-4">
       {/* 게시글 목록 */}
@@ -128,7 +137,7 @@ const Post = () => {
       {showForm && (
         <div className="w-1/2 border p-4 rounded shadow">
           <h3 className="text-lg font-semibold mb-2">새 게시글 작성</h3>
-          <form onSubmit={handleCreate} className="flex flex-col gap-2">
+          <form onSubmit={handlePosts} className="flex flex-col gap-2">
             <input
               type="text"
               placeholder="제목"
@@ -138,8 +147,8 @@ const Post = () => {
             />
             <textarea
               placeholder="내용"
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
               className="border p-2 rounded h-32 resize-none"
             />
             <button type="submit" className="bg-green-300 px-3 py-1 rounded">작성</button>

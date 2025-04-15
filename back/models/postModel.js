@@ -10,10 +10,10 @@ export const getPostById = async (id) => {
   return rows[0];
 };
 
-export const createPost = async (userId, title, content, hashtags) => {
+export const createPost = async (userId, title, content) => {
   const [result] = await db.query(
-    'INSERT INTO posts (user_id, title, content, hashtags) VALUES (?, ?, ?, ?)',
-    [userId, title, content, hashtags]
+    'INSERT INTO posts (user_id, title, content) VALUES (?, ?, ?)',
+    [userId, title, content]
   );
   return result.insertId;
 };
