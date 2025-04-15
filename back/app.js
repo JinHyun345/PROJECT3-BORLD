@@ -6,7 +6,6 @@ import index from './routes/index.js'
 import signinRoutes from './routes/signinRoutes.js';
 import signupRoutes from './routes/signupRoutes.js';
 import postRoutes from './routes/postRoutes.js';
-import verificationRoutes from './routes/verificationRoutes.js';
 import db from './models/db.js';
 
 const app = express();
@@ -29,6 +28,5 @@ db.connect(err => {
 
 // 라우터 연결
 app.use('/', index, signupRoutes, signinRoutes, postRoutes );
-app.use('/verification', verificationRoutes);
 
 export default app;
