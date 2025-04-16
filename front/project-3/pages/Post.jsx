@@ -10,22 +10,31 @@ const Post = () => {
   const [showForm, setShowForm] = useState(false);
 
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/signin"); // 로그인 페이지로 이동
+      return;
+    }
+  
     fetch(`${apiUrl}/verifyToken`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then(res => {
-        if (!res.ok) throw new Error('인증 필요!');
+        if (!res.ok) throw new Error("인증 필요!");
         return res.json();
       })
       .then(data => setPosts(data))
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        navigate("/signin"); // 토큰이 만료됐거나 인증 실패하면 이동
+      });
   }, []);
+  
 
   // 게시글 목록 불러오기
   const fetchPosts = async () => {
@@ -83,7 +92,7 @@ const Post = () => {
 
   const handleSignOut = () => {
     localStorage.removeItem("token"); // 토큰 삭제
-    navigate('/login'); // 로그인 페이지로
+    navigate('/'); // 로그인 페이지로
   };
 
   const handleDeleteAccount = async () => {

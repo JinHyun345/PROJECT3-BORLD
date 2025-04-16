@@ -4,7 +4,6 @@ import Signup from '../pages/Signup';
 import Signin from '../pages/Signin';
 import Post from '../pages/Post';
 import "./App.css";
-const apiUrl = import.meta.env.VITE_API_URL;
 
 const App = () => {
   return (

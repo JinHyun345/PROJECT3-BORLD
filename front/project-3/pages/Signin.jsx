@@ -32,7 +32,7 @@ const Signin = () => {
   };
 
   return (
-    <div className="auth-container">
+    <div>
         <form onSubmit={handleSignin}>
           <h2>Sign In</h2>
           <input
