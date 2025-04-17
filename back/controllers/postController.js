@@ -2,7 +2,7 @@ import { getAllPosts, getPostById, createPost } from '../models/postModel.js';
 
 export const fetchAllPosts = async (req, res) => {
   try {
-    const posts = await postModel.getAllPosts();
+    const posts = await getAllPosts();
     res.json(posts);
   } catch (err) {
     res.status(500).json({ message: '게시글을 불러오지 못했습니다.' });
@@ -11,7 +11,7 @@ export const fetchAllPosts = async (req, res) => {
 
 export const fetchPostById = async (req, res) => {
   try {
-    const post = await postModel.getPostById(req.params.id);
+    const post = await getPostById(req.params.id);
     if (!post) return res.status(404).json({ message: '게시글이 없습니다.' });
     res.json(post);
   } catch (err) {

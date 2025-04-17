@@ -46,11 +46,11 @@ const Signup = () => {
       console.error("React : Signup error:", error);
       alert("React:An error occurred. Please try again.");
     }
-    setView("buttons"); // 초기 화면으로 돌아가기
     setEmail("");
     setUsername("");
     setPassword("");
     setPasswordcheck("");
+    navigate("/");
   };
 
   return (

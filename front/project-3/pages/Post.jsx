@@ -10,48 +10,47 @@ const Post = () => {
   const [showForm, setShowForm] = useState(false);
 
   const navigate = useNavigate();
-  
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/signin"); // 로그인 페이지로 이동
-      return;
-    }
-  
-    fetch(`${apiUrl}/verifyToken`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(res => {
-        if (!res.ok) throw new Error("인증 필요!");
-        return res.json();
-      })
-      .then(data => setPosts(data))
-      .catch(err => {
-        console.error(err);
-        navigate("/signin"); // 토큰이 만료됐거나 인증 실패하면 이동
-      });
-  }, []);
-  
 
-  // 게시글 목록 불러오기
   const fetchPosts = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${apiUrl}/post`, {
+      if (!token) {
+        navigate("/signin"); // 로그인 페이지로 이동
+        return;
+      }
+  
+      const res = await fetch(`${apiUrl}/verifyToken`, {
+        method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
+  
       if (!res.ok) throw new Error("인증 필요!");
-      const data = await res.json();
-      setPosts(data);
+      
+      // 인증이 성공하면 게시글 요청
+      const postsRes = await fetch(`${apiUrl}/post`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (!postsRes.ok) throw new Error("게시글 불러오기 실패!");
+  
+      const data = await postsRes.json();
+      console.log(data);
+      setPosts(data);  // 게시글 데이터를 상태에 저장
     } catch (err) {
-      console.error("글 불러오기 에러", err);
+      console.error("에러 발생:", err);
+      navigate("/signin"); // 토큰 만료나 인증 실패시 로그인 페이지로 이동
     }
   };
+  
+  useEffect(() => {
+    fetchPosts(); // useEffect 안에서 한 번만 호출
+  }, []);
+  
+
   // 글 작성
   const handlePosts = async (e) => {
     e.preventDefault();
@@ -117,7 +116,7 @@ const Post = () => {
       console.error("탈퇴 에러", err);
     }
   };
-  
+
   return (
     <div className="flex gap-6 p-4">
       {/* 게시글 목록 */}
