@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../src/AuthContexts";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Signin = () => {
+  const { signIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -17,8 +19,11 @@ const Signin = () => {
     });
     const data = await response.json();
     if (response.ok && data.token) {
+      console.log('데이터는',data);
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);
+
+      signIn(data.username);
 
       alert("로그인에 성공했습니다!");
       setEmail("");
