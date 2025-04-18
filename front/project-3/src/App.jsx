@@ -3,6 +3,8 @@ import Home from '../pages/Home';
 import Signup from '../pages/Signup';
 import Signin from '../pages/Signin';
 import Post from '../pages/Post';
+import Account from '../pages/Account';
+
 import { AuthProvider } from './AuthContexts';
 import "./App.css";
 
@@ -15,6 +17,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/post" element={<Post />} />
+          <Route path="/account" element={<Account />} />
         </Routes>
       </AuthProvider>
     </Router>

@@ -23,10 +23,9 @@ const Signin = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);
 
-      signIn(data.username);
+      signIn(data.username, email);
 
       alert("로그인에 성공했습니다!");
-      setEmail("");
       setPassword("");
       navigate('/post');
     } else {

@@ -4,13 +4,10 @@ import { useAuth } from '../src/AuthContexts';
 
 const Post = () => {
   const navigate = useNavigate();
-  const { username } = useAuth();
-
-  const handleAccountClick = () => {
-    navigate('/account');
-  };
+  const { user } = useAuth();
 
   const handleSignOut = () => {
+    localStorage.removeItem("token"); 
     navigate('/');
   };
 
@@ -18,12 +15,12 @@ const Post = () => {
     <div>
       <h1>BORLD</h1>
       <div>
-        {username ? (
-          <span>Welcome, {username}</span>  // username이 있을 때만 표시
+        {user.username ? (
+          <span>Welcome, {user.username}</span>  // username이 있을 때만 표시
         ) : (
           <span>Loading...</span> // username이 없으면 Loading 표시
         )}
-        <button onClick={handleAccountClick}>My</button>
+        <button onClick={()=> navigate('/account')}>My</button>
         <button onClick={handleSignOut}>Sign Out</button>
       </div>
     </div>
