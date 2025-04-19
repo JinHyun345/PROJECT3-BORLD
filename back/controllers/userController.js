@@ -2,7 +2,7 @@ import db from '../models/db.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-// 여기에 signup, signin, deleteUser 있읍니다...
+// 여기에 signup, signin, deleteUser, editAccount 있읍니다...
 
 export const signup = async (req, res) => {
   const { username, email, password } = req.body;
@@ -38,7 +38,7 @@ export const signin = async (req, res) => {
     if (!isMatch) return res.status(401).json({ error: "비밀번호가 틀렸습니다." });
 
     const token = jwt.sign({ id: results[0].id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token, username: results[0].username });
+    res.json({ token, id: results[0].id, username: results[0].username });
   });
 };
 
@@ -54,6 +54,26 @@ export const deleteUser = (req, res) => {
         return res.status(404).json({ error: "유저 없음" });
 
       res.json({ message: "회원 탈퇴 완료" });
+    });
+  });
+};
+
+export const editAccount = (req, res) => {
+  const { id, username, email } = req.body;
+  db.query("UPDATE users SET username=?, email=? WHERE id=?", [username, email, id], async (err, results1) => {
+    if (err) return res.status(500).json({error: "데이터베이스 에러", details: err});
+
+    // affectedRows로 실제로 수정된 데이터가 있는지 확인할 수도 있어
+    if (results1.affectedRows === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    db.query("SELECT * from users WHERE id=?", [id], async (err, results2) => {
+      if(err) return res.status(500).json({error: "데이터 조회 에러", datails: err})
+      const users = results2[0];
+      if (!users) {
+        return res.status(404).json({ error: "수정 후 유저 사라짐" });
+      }
+      return res.status(200).json({ username: users.username, email: users.email});
     });
   });
 };

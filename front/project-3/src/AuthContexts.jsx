@@ -3,10 +3,11 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [id, setId] = useState(null);
   const [username, setUsername] = useState(null); // user = { username: 'Isen' }
   const [email, setEmail] = useState(null);
   
-  const user = { username, email };
+  const user = { id, username, email };
   
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
@@ -14,7 +15,8 @@ export const AuthProvider = ({ children }) => {
       setUsername(storedUsername);  // 초기화 시 localStorage에서 username 가져오기
     }
   }, []);
-  const signIn = (username, email) => {
+  const signIn = (id, username, email) => {
+    setId(id);
     setEmail(email);
     setUsername(username);
   };

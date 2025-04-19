@@ -6,6 +6,7 @@ import index from './routes/index.js'
 import signinRoutes from './routes/signinRoutes.js';
 import signupRoutes from './routes/signupRoutes.js';
 import postRoutes from './routes/postRoutes.js';
+import accountRoutes from './routes/accountRoutes.js';
 import db from './models/db.js';
 
 const app = express();
@@ -27,6 +28,9 @@ db.connect(err => {
 });
 
 // 라우터 연결
-app.use('/', index, signupRoutes, signinRoutes, postRoutes );
+app.use('/', index, signupRoutes, signinRoutes, postRoutes, accountRoutes);
+app.use('/post', postRoutes);
+app.use('/account', accountRoutes);
+
 
 export default app;

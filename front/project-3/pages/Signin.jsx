@@ -22,8 +22,8 @@ const Signin = () => {
       console.log('데이터는',data);
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);
-
-      signIn(data.username, email);
+      
+      signIn(data.id, data.username, email);
 
       alert("로그인에 성공했습니다!");
       setPassword("");
