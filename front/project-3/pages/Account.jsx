@@ -50,6 +50,7 @@ const Account = () => {
         if (response.ok) {
           signIn(user.id, data.username, data.email);
           setIsEditing(false);
+          alert('변경되었습니다.');
           navigate('/account'); // 수정된 정보로 돌아감
         } else {
           alert('수정에 실패했습니다. 다시 시도해 주세요.');
@@ -95,9 +96,6 @@ const Account = () => {
           </div>
 
           <div>
-            <button onClick={() => navigate('/post')}>Back</button>
-            <button onClick={() => navigate('/account/pw')}>Change Password</button>
-
             <div>
               <label>Name : </label>
               <input

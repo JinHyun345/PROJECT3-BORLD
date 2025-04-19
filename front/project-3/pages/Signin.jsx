@@ -19,17 +19,16 @@ const Signin = () => {
     });
     const data = await response.json();
     if (response.ok && data.token) {
-      console.log('데이터는',data);
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);
-      
+  
       signIn(data.id, data.username, email);
 
       alert("로그인에 성공했습니다!");
       setPassword("");
       navigate('/post');
     } else {
-      alert("비밀번호를 확인해주세요");
+      alert(data.error);
     }
   };
 
