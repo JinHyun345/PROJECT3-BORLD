@@ -6,7 +6,6 @@ import Post from '../pages/Post';
 import Account from '../pages/account';
 import ChangePassword from '../pages/Change_pw';
 import { AuthProvider } from './AuthContexts';
-import "./App.css";
 
 const App = () => {
   return (

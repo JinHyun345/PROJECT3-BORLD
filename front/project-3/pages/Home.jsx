@@ -6,7 +6,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className="min-h-screen bg-blue-200 flex items-center justify-center">
       <h1>BORLD</h1>
       <div>
         <button
