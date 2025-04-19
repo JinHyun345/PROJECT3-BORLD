@@ -51,7 +51,6 @@ const ChangePassword = () => {
             alert('서버와의 연결에 문제가 생겼습니다.');
         }
     }
-
     return (
         <div>
             <h1>BORLD</h1>
