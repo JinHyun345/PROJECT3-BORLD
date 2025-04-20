@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from "../src/ThemeContexts";
+
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Signup = () => {
+  const { darkMode, setDarkMode } = useTheme();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -54,39 +57,69 @@ const Signup = () => {
   };
 
   return (
-    <div>
-        <div>
-          <h2>Sign Up</h2>
-          <form onSubmit={handleSignup}>
-            <input
-              type="email"
-              placeholder="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="rewrite the Password"
-              value={passwordcheck}
-              onChange={(e) => setPasswordcheck(e.target.value)}
-            />
-            <button type="submit">Sign Up</button>
-            <button type="button" onClick={() => {setUsername(""); setEmail(""); setPassword(""); navigate('/');}}>Back</button>
-          </form>
-        </div>
+    <div className="min-h-screen bg-white dark:bg-black flex flex-col items-center justify-center text-black dark:text-white transition-colors duration-500">
+      <div className="w-full max-w-sm p-8 bg-white dark:bg-black rounded-lg shadow-lg space-y-6">
+        <h2 className="text-3xl font-bold tracking-wide font-inter text-center">Sign Up</h2>
+
+        <form onSubmit={handleSignup} className="space-y-4">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-3 border border-black dark:border-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
+          />
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full p-3 border border-black dark:border-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-3 border border-black dark:border-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
+          />
+          <input
+            type="password"
+            placeholder="Rewrite the Password"
+            value={passwordcheck}
+            onChange={(e) => setPasswordcheck(e.target.value)}
+            className="w-full p-3 border border-black dark:border-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
+          />
+
+          <button
+            type="submit"
+            className="w-full px-6 py-2 border border-black dark:border-white text-black dark:text-white font-medium rounded-md shadow-xl hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300"
+          >
+            Sign Up
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setUsername("");
+              setEmail("");
+              setPassword("");
+              navigate("/");
+            }}
+            className="w-full px-6 py-2 border border-gray-400 text-gray-600 dark:border-gray-400 dark:text-gray-200 font-medium rounded-md shadow-xl hover:bg-gray-200 dark:hover:bg-gray-800 transition-all duration-300"
+          >
+            Back
+          </button>
+        </form>
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="mt-6 px-4 py-2 text-sm border border-gray-400 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+        >
+          {darkMode ? "🌞" : "🌙"}
+        </button>
+      </div>
     </div>
+
   );
 
 };

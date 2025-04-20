@@ -6,11 +6,14 @@ import Post from '../pages/Post';
 import Account from '../pages/account';
 import ChangePassword from '../pages/Change_pw';
 import { AuthProvider } from './AuthContexts';
+import { ThemeProvider } from './ThemeContexts';
+
 
 const App = () => {
   return (
     <Router>
       <AuthProvider>
+        <ThemeProvider>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
@@ -19,6 +22,7 @@ const App = () => {
           <Route path="/account" element={<Account />} />
           <Route path="/account/pw" element={<ChangePassword />} />
         </Routes>
+        </ThemeProvider>
       </AuthProvider>
     </Router>
   );
