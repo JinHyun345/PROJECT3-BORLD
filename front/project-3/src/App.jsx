@@ -3,7 +3,7 @@ import Home from '../pages/Home';
 import Signup from '../pages/Signup';
 import Signin from '../pages/Signin';
 import Post from '../pages/Post';
-import Account from '../pages/account';
+import Account from '../pages/Account';
 import ChangePassword from '../pages/Change_pw';
 import { AuthProvider } from './AuthContexts';
 import { ThemeProvider } from './ThemeContexts';
