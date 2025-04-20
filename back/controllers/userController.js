@@ -86,7 +86,7 @@ export const changePassword = async (req, res) => {
 
   if (!newPassword || !password)
     return res.status(400).json({ error: "모든 정보를 입력해주세요." });
-  if (typeof id !== 'number' || id.length > 100) {
+  if (typeof id !== 'number' || id<1 || id > 100000) {
     return res.status(400).json({ error: "잘못된 사용자 ID입니다." });
   }
 
