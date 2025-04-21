@@ -1,5 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 function PostRead() {
   const { uuid } = useParams(); // URL에서 uuid 추출
@@ -13,8 +15,9 @@ function PostRead() {
     // 해당 uuid에 맞는 게시물을 가져오는 API 호출 (예시)
     const fetchPost = async () => {
       try {
-        const response = await fetch(`/api/posts/${uuid}`);
+        const response = await fetch(`${apiUrl}/posts/${uuid}`);
         const data = await response.json();
+        console.log(data);
         setPost(data);
       } catch (error) {
         console.error('게시물 가져오기 실패:', error);
@@ -64,7 +67,7 @@ function PostRead() {
       <div className="mt-4 text-lg">{post.content}</div>
 
       {/* 해시태그 */}
-      {post.hashtags && post.hashtags.length > 0 && (
+      {/* {post.hashtags && post.hashtags.length > 0 && (
         <div className="mt-4">
           <span className="font-semibold">Hashtags: </span>
           {post.hashtags.map((hashtag, index) => (
@@ -73,7 +76,7 @@ function PostRead() {
             </span>
           ))}
         </div>
-      )}
+      )} */}
 
       {/* 작성자 정보 */}
       <div className="mt-4 text-gray-600">

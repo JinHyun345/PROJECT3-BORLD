@@ -6,6 +6,7 @@ import Post from '../pages/Post';
 import Account from '../pages/Account';
 import PostAdd from '../pages/AddPost';
 import ChangePassword from '../pages/Change_pw';
+import PostRead from '../pages/PostRead';
 import { AuthProvider } from './AuthContexts';
 import { ThemeProvider } from './ThemeContexts';
 
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/account" element={<Account />} />
           <Route path="/account/pw" element={<ChangePassword />} />
           <Route path="/post/add" element={<PostAdd />} />
+          <Route path="/post/:uuid" element={<PostRead />} />
         </Routes>
         </ThemeProvider>
       </AuthProvider>

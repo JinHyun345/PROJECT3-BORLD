@@ -10,7 +10,6 @@ export const fetchAllPosts = async (req, res) => {
       FROM posts
       JOIN users ON posts.user_id = users.id
     `);
-    console.log(rows);
     res.json(rows); // 클라이언트(fetch)가 받는 데이터
   } catch (error) {
     console.error('게시글 목록 조회 실패:', error);
@@ -41,3 +40,29 @@ export const createNewPost = async (req, res) => {
   }
 };
 
+export const getPostByUuid = async (req, res) => {
+  const { uuid } = req.params;
+
+  try {
+    // 예시: MySQL에서 uuid를 기반으로 게시글 찾기
+    const [rows] = await pool.execute(
+      `
+      SELECT 
+        posts.*, 
+        users.username 
+      FROM posts
+      JOIN users ON posts.user_id = users.id
+      WHERE posts.uuid = ?
+      `,
+      [uuid]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: '게시글을 찾을 수 없습니다.' });
+    }
+    res.json(rows[0]);
+  } catch (error) {
+    console.error('게시글 가져오기 오류:', error);
+    res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+  }
+};
