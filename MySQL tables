@@ -1,0 +1,26 @@
+mysql> DESC users;
++-------------------+--------------+------+-----+-------------------+-------------------+
+| Field             | Type         | Null | Key | Default           | Extra             |
++-------------------+--------------+------+-----+-------------------+-------------------+
+| id                | int          | NO   | PRI | NULL              | auto_increment    |
+| username          | varchar(50)  | YES  |     | NULL              |                   |
+| email             | varchar(100) | NO   | UNI | NULL              |                   |
+| password          | varchar(255) | NO   |     | NULL              |                   |
+| verification_code | varchar(6)   | YES  |     | NULL              |                   |
+| is_verified       | tinyint(1)   | YES  |     | 0                 |                   |
+| created_at        | timestamp    | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-------------------+--------------+------+-----+-------------------+-------------------+
+
+mysql> DESC posts;
++------------+--------------+------+-----+-------------------+-------------------+
+| Field      | Type         | Null | Key | Default           | Extra             |
+| Field      | Type         | Null | Key | Default           | Extra             |
++------------+--------------+------+-----+-------------------+-------------------+
+| id         | int          | NO   | PRI | NULL              | auto_increment    |
+| user_id    | int          | NO   | MUL | NULL              |                   |
+| title      | varchar(255) | NO   |     | NULL              |                   |
+| content    | text         | NO   |     | NULL              |                   |
+| created_at | datetime     | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
+| hashtags   | varchar(255) | YES  |     | NULL              |                   |
+| uuid       | char(36)     | NO   |     | NULL              |                   |
++------------+--------------+------+-----+-------------------+-------------------+
