@@ -7,7 +7,6 @@ import signinRoutes from './routes/signinRoutes.js';
 import signupRoutes from './routes/signupRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import accountRoutes from './routes/accountRoutes.js';
-import db from './models/db.js';
 
 const app = express();
 app.use(session({
@@ -21,16 +20,13 @@ app.use(cors({
   credentials: true
 }));
 
-// DB 연결
-db.connect(err => {
-  if (err) console.error("❌ MySQL 연결 실패:", err);
-  else console.log("✅ MySQL 연결 성공!");
-});
-
 // 라우터 연결
-app.use('/', index, signupRoutes, signinRoutes, postRoutes, accountRoutes);
-app.use('/post', postRoutes);
-app.use('/account', accountRoutes);
+app.use('/', index);  // 홈 라우터 (메인 페이지)
+app.use('/signup', signupRoutes);  // /signup 경로에 signupRoutes 처리
+app.use('/signin', signinRoutes);  // /signin 경로에 signinRoutes 처리
+app.use('/posts', postRoutes);  // /posts 경로에 postRoutes 처리
+app.use('/account', accountRoutes);  // /account 경로에 accountRoutes 처리
+
 
 
 export default app;
