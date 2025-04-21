@@ -3,11 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 export const fetchAllPosts = async (req, res) => {
-  console.log("이건오나?");
   try {
     // 커넥션 풀에서 연결을 가져옴
     const [rows] = await pool.execute(`
-      SELECT posts.id, posts.title, posts.content, posts.created_at, users.username
+      SELECT posts.id, posts.title, posts.content, posts.created_at, posts.uuid, users.username
       FROM posts
       JOIN users ON posts.user_id = users.id
     `);
