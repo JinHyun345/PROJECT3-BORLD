@@ -67,23 +67,6 @@ function PostRead() {
     {/* 게시물 내용 */}
     <div className="mt-6 text-lg text-gray-700 dark:text-gray-300">{post.content}</div>
 
-    {/* 해시태그 */}
-    {/* {post.hashtags && post.hashtags.length > 0 && (
-      <div className="mt-4 text-gray-600 dark:text-gray-400">
-        <span className="font-semibold">Hashtags: </span>
-        {post.hashtags.map((hashtag, index) => (
-          <span key={index} className="text-blue-500 dark:text-blue-400">
-            #{hashtag}{" "}
-          </span>
-        ))}
-      </div>
-
-
-
-
-      
-    )} */}
-
     {/* 작성자 정보 */}
     <div className="mt-6 text-gray-600 dark:text-gray-400">
       <span className="font-semibold">작성자:</span> {post.username}
