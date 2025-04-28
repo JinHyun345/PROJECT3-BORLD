@@ -51,62 +51,70 @@ function PostRead() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      {/* 뒤로가기 버튼 */}
-      <button 
-        onClick={() => navigate(-1)} 
-        className="text-blue-500 hover:text-blue-700 mb-4"
-      >
-        뒤로가기
-      </button>
+    <div className="min-h-screen bg-white dark:bg-black flex flex-col items-center justify-start text-black dark:text-white transition-colors duration-500">
+  <div className="w-full max-w-4xl p-8 bg-white dark:bg-black rounded-lg shadow-xl space-y-8">
+    {/* 뒤로가기 버튼 */}
+    <button 
+      onClick={() => navigate(-1)} 
+      className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mb-6 text-lg font-semibold"
+    >
+      뒤로가기
+    </button>
 
-      {/* 게시물 제목 */}
-      <h1 className="text-3xl font-bold">{post.title}</h1>
+    {/* 게시물 제목 */}
+    <h1 className="text-4xl font-extrabold text-gray-800 dark:text-gray-200 mb-4">{post.title}</h1>
 
-      {/* 게시물 내용 */}
-      <div className="mt-4 text-lg">{post.content}</div>
+    {/* 게시물 내용 */}
+    <div className="mt-6 text-lg text-gray-700 dark:text-gray-300">{post.content}</div>
 
-      {/* 해시태그 */}
-      {/* {post.hashtags && post.hashtags.length > 0 && (
-        <div className="mt-4">
-          <span className="font-semibold">Hashtags: </span>
-          {post.hashtags.map((hashtag, index) => (
-            <span key={index} className="text-blue-500">
-              #{hashtag}{" "}
-            </span>
-          ))}
-        </div>
-      )} */}
-
-      {/* 작성자 정보 */}
-      <div className="mt-4 text-gray-600">
-        <span className="font-semibold">작성자:</span> {post.username}
+    {/* 해시태그 */}
+    {/* {post.hashtags && post.hashtags.length > 0 && (
+      <div className="mt-4 text-gray-600 dark:text-gray-400">
+        <span className="font-semibold">Hashtags: </span>
+        {post.hashtags.map((hashtag, index) => (
+          <span key={index} className="text-blue-500 dark:text-blue-400">
+            #{hashtag}{" "}
+          </span>
+        ))}
       </div>
 
-      {/* 수정 버튼 (작성자가 현재 로그인한 사용자일 경우) */}
-      {post.userId === currentUser && (
-        <div className="mt-4">
-          <button 
-            onClick={() => navigate(`/post/edit/${uuid}`)} 
-            className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
-          >
-            수정
-          </button>
-        </div>
-      )}
 
-      {/* 삭제 버튼 (작성자가 현재 로그인한 사용자일 경우) */}
-      {post.userId === currentUser && (
-        <div className="mt-2">
-          <button 
-            onClick={handleDelete} 
-            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-          >
-            삭제
-          </button>
-        </div>
-      )}
+
+
+      
+    )} */}
+
+    {/* 작성자 정보 */}
+    <div className="mt-6 text-gray-600 dark:text-gray-400">
+      <span className="font-semibold">작성자:</span> {post.username}
     </div>
+
+    {/* 수정 버튼 (작성자가 현재 로그인한 사용자일 경우) */}
+    {post.userId === currentUser && (
+      <div className="mt-6">
+        <button 
+          onClick={() => navigate(`/post/edit/${uuid}`)} 
+          className="w-full px-6 py-3 bg-yellow-500 text-white font-semibold rounded-md hover:bg-yellow-600 transition duration-300"
+        >
+          수정
+        </button>
+      </div>
+    )}
+
+    {/* 삭제 버튼 (작성자가 현재 로그인한 사용자일 경우) */}
+    {post.userId === currentUser && (
+      <div className="mt-4">
+        <button 
+          onClick={handleDelete} 
+          className="w-full px-6 py-3 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition duration-300"
+        >
+          삭제
+        </button>
+      </div>
+    )}
+  </div>
+</div>
+
   );
 }
 

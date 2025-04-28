@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from "../src/ThemeContexts";
 
 const apiUrl = import.meta.env.VITE_API_URL;
+console.log(import.meta.env.VITE_API_URL);
+
 
 const Signup = () => {
   const { darkMode, setDarkMode } = useTheme();
